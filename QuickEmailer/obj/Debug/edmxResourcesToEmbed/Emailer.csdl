@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QuickEmailerDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Agencies">
+    <Key>
+      <PropertyRef Name="AgencyName" />
+    </Key>
+    <Property Name="AgencyName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="AgencyEmails" Relationship="Self.FK__AgencyEma__Agenc__25869641" FromRole="Agencies" ToRole="AgencyEmails" />
+  </EntityType>
+  <EntityType Name="AgencyEmails">
+    <Key>
+      <PropertyRef Name="AgencyName" />
+      <PropertyRef Name="Email" />
+    </Key>
+    <Property Name="AgencyName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Agencies" Relationship="Self.FK__AgencyEma__Agenc__25869641" FromRole="AgencyEmails" ToRole="Agencies" />
+  </EntityType>
+  <Association Name="FK__AgencyEma__Agenc__25869641">
+    <End Role="Agencies" Type="Self.Agencies" Multiplicity="1" />
+    <End Role="AgencyEmails" Type="Self.AgencyEmails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Agencies">
+        <PropertyRef Name="AgencyName" />
+      </Principal>
+      <Dependent Role="AgencyEmails">
+        <PropertyRef Name="AgencyName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QuickEmailerDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Agencies" EntityType="Self.Agencies" />
+    <EntitySet Name="AgencyEmails" EntityType="Self.AgencyEmails" />
+    <AssociationSet Name="FK__AgencyEma__Agenc__25869641" Association="Self.FK__AgencyEma__Agenc__25869641">
+      <End Role="Agencies" EntitySet="Agencies" />
+      <End Role="AgencyEmails" EntitySet="AgencyEmails" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="QuickEmailerDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Agencies">
+          <Key>
+            <PropertyRef Name="AgencyName" />
+          </Key>
+          <Property Name="AgencyName" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\JOEL\SOURCE\REPOS\QUICKEMAILER\QUICKEMAILER\APP_DATA\QUICKEMAILERDB.MDF.dbo.AgencyEmails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AgencyEmails">
+          <Key>
+            <PropertyRef Name="AgencyName" />
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="AgencyName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__AgencyEma__Agenc__25869641">
+          <End Role="Agencies" Type="Self.Agencies" Multiplicity="1" />
+          <End Role="AgencyEmails" Type="Self.AgencyEmails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agencies">
+              <PropertyRef Name="AgencyName" />
+            </Principal>
+            <Dependent Role="AgencyEmails">
+              <PropertyRef Name="AgencyName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuickEmailerDBModelStoreContainer">
+          <EntitySet Name="Agencies" EntityType="Self.Agencies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AgencyEmails" EntityType="Self.AgencyEmails" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AgencyEmails].[AgencyName] AS [AgencyName], 
+    [AgencyEmails].[Email] AS [Email]
+    FROM [dbo].[AgencyEmails] AS [AgencyEmails]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__AgencyEma__Agenc__25869641" Association="Self.FK__AgencyEma__Agenc__25869641">
+            <End Role="Agencies" EntitySet="Agencies" />
+            <End Role="AgencyEmails" EntitySet="AgencyEmails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QuickEmailerDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Agencies">
+          <Key>
+            <PropertyRef Name="AgencyName" />
+          </Key>
+          <Property Name="AgencyName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AgencyEmails" Relationship="Self.FK__AgencyEma__Agenc__25869641" FromRole="Agencies" ToRole="AgencyEmails" />
+        </EntityType>
+        <EntityType Name="AgencyEmails">
+          <Key>
+            <PropertyRef Name="AgencyName" />
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="AgencyName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Agencies" Relationship="Self.FK__AgencyEma__Agenc__25869641" FromRole="AgencyEmails" ToRole="Agencies" />
+        </EntityType>
+        <Association Name="FK__AgencyEma__Agenc__25869641">
+          <End Role="Agencies" Type="Self.Agencies" Multiplicity="1" />
+          <End Role="AgencyEmails" Type="Self.AgencyEmails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agencies">
+              <PropertyRef Name="AgencyName" />
+            </Principal>
+            <Dependent Role="AgencyEmails">
+              <PropertyRef Name="AgencyName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuickEmailerDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Agencies" EntityType="Self.Agencies" />
+          <EntitySet Name="AgencyEmails" EntityType="Self.AgencyEmails" />
+          <AssociationSet Name="FK__AgencyEma__Agenc__25869641" Association="Self.FK__AgencyEma__Agenc__25869641">
+            <End Role="Agencies" EntitySet="Agencies" />
+            <End Role="AgencyEmails" EntitySet="AgencyEmails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QuickEmailerDBModelStoreContainer" CdmEntityContainer="QuickEmailerDBEntities">
+          <EntitySetMapping Name="Agencies">
+            <EntityTypeMapping TypeName="QuickEmailerDBModel.Agencies">
+              <MappingFragment StoreEntitySet="Agencies">
+                <ScalarProperty Name="AgencyName" ColumnName="AgencyName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AgencyEmails">
+            <EntityTypeMapping TypeName="QuickEmailerDBModel.AgencyEmails">
+              <MappingFragment StoreEntitySet="AgencyEmails">
+                <ScalarProperty Name="AgencyName" ColumnName="AgencyName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

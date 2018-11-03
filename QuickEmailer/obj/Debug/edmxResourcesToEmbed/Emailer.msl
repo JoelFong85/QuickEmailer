@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="QuickEmailerDBModelStoreContainer" CdmEntityContainer="QuickEmailerDBEntities">
+    <EntitySetMapping Name="Agencies">
+      <EntityTypeMapping TypeName="QuickEmailerDBModel.Agencies">
+        <MappingFragment StoreEntitySet="Agencies">
+          <ScalarProperty Name="AgencyName" ColumnName="AgencyName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AgencyEmails">
+      <EntityTypeMapping TypeName="QuickEmailerDBModel.AgencyEmails">
+        <MappingFragment StoreEntitySet="AgencyEmails">
+          <ScalarProperty Name="AgencyName" ColumnName="AgencyName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QuickEmailerDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Agencies">
+    <Key>
+      <PropertyRef Name="AgencyName" />
+    </Key>
+    <Property Name="AgencyName" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\JOEL\SOURCE\REPOS\QUICKEMAILER\QUICKEMAILER\APP_DATA\QUICKEMAILERDB.MDF.dbo.AgencyEmails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="AgencyEmails">
+    <Key>
+      <PropertyRef Name="AgencyName" />
+      <PropertyRef Name="Email" />
+    </Key>
+    <Property Name="AgencyName" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__AgencyEma__Agenc__25869641">
+    <End Role="Agencies" Type="Self.Agencies" Multiplicity="1" />
+    <End Role="AgencyEmails" Type="Self.AgencyEmails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Agencies">
+        <PropertyRef Name="AgencyName" />
+      </Principal>
+      <Dependent Role="AgencyEmails">
+        <PropertyRef Name="AgencyName" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QuickEmailerDBModelStoreContainer">
+    <EntitySet Name="Agencies" EntityType="Self.Agencies" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AgencyEmails" EntityType="Self.AgencyEmails" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [AgencyEmails].[AgencyName] AS [AgencyName], 
+    [AgencyEmails].[Email] AS [Email]
+    FROM [dbo].[AgencyEmails] AS [AgencyEmails]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__AgencyEma__Agenc__25869641" Association="Self.FK__AgencyEma__Agenc__25869641">
+      <End Role="Agencies" EntitySet="Agencies" />
+      <End Role="AgencyEmails" EntitySet="AgencyEmails" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
